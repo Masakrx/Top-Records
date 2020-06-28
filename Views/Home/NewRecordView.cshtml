@@ -1,0 +1,45 @@
+﻿@model Top_lista_vremena.Models.TopTime
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="display-4">Novo vrijeme</h1>
+<div>&nbsp;</div>
+
+@using (Html.BeginForm("AddRecord", "Home", FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            <label for="name" class="control-label col-md-2">Ime: </label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Name, null, new { htmlAttributes = new { @class = "form-control", @id = "name", @placeholder = "Unesite ime..." } })
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="surname" class="control-label col-md-2">Prezime: </label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Surname, null, new { htmlAttributes = new { @class = "form-control", @id = "surname", @placeholder = "Unesite prezime..." } })
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="time" class="control-label col-md-2">Vrijeme: </label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.Time, null, new { htmlAttributes = new { @class = "form-control", @id = "time", @type = "time", @step = "1" } })
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-3">
+                <input type="submit" value="Prijavi" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+

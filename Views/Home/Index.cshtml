@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Najbolja vremena</h1>
+    <div>&nbsp;</div>
+    <div id="topListTable">
+    </div>
+</div>
+
+<script>
+    (function ($) {
+        $(function () {
+            GetTopList();
+        });
+    })(jQuery);
+</script>
+
+<script>
+    function GetTopList() {
+        $.ajax({
+            url: '@Url.Action("TopListView", "Home")',
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            success: function (result) {
+                $('#topListTable').html(result);
+            },
+            error: function () {
+                alert("Nije moguće očitati top rezultate iz baze.");
+            }
+        });
+    }
+</script>
