@@ -1,58 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Top_lista_vremena.Models;
 
 namespace Top_lista_vremena.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
+        private readonly ITopListRepository _topListRepository;
         private readonly IConfiguration configuration;
-        public readonly string connectionString;
+        private readonly string connectionString;
         private static IList<TopTime> TopTimes;
 
-        public HomeController(IConfiguration config)
+        public HomeController(IConfiguration config, ITopListRepository topListRepository)
         {
             this.configuration = config;
             connectionString = configuration.GetConnectionString("TopListConnection");
-            GetRecords();
-        }
-        
-        public void GetRecords()
-        {
-            using (var connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    TopTimes = new List<TopTime>();
-                    SqlCommand cmd = new SqlCommand("spGetTopListRecords", connection);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    connection.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        TopTime record = new TopTime();
-                        record.ID = (int)dr[0];
-                        record.Name = dr[1].ToString();
-                        record.Surname = dr[2].ToString();
-                        record.Time = TimeSpan.Parse(dr[3].ToString());
-
-                        TopTimes.Add(record);
-                    }
-                    connection.Close();
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            }
+            _topListRepository = topListRepository;
+            TopTimes = _topListRepository.GetTopList();
         }
 
         public IActionResult Index()
@@ -72,34 +41,16 @@ namespace Top_lista_vremena.Controllers
 
         public IActionResult AddRecord(TopTime record)
         {
-            if (TopTimes == null)
-                TopTimes = new List<TopTime>();
-            if (TopTimes.Count != 0)
-                record.ID = TopTimes.Max(x => x.ID) + 1;
-            else
-                record.ID = 1;
-            
-            TopTimes.Add(record);
+            _topListRepository.AddTopListRecord(record);
 
-            using (var connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    SqlCommand cmd = new SqlCommand("spAddTopListRecord", connection);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@name", record.Name);
-                    cmd.Parameters.AddWithValue("@surname", record.Surname);
-                    cmd.Parameters.AddWithValue("@time", record.Time);
-                    connection.Open();
-                    cmd.ExecuteReader();
-                    connection.Close();
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            }
             return View("Index");
         }
+
+        [Authorize]
+        public IActionResult NewRecordsList()
+        {
+            return View("newRecordsListView");
+        }
+
     }
 }

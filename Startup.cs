@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Top_lista_vremena.Models;
+using static Top_lista_vremena.Models.DbContext_Model;
 
 namespace Top_lista_vremena
 {
@@ -26,8 +26,29 @@ namespace Top_lista_vremena
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("TopListConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+            services.AddMvc(option => 
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+
+                option.Filters.Add(new AuthorizeFilter(policy));
+                option.EnableEndpointRouting = false;
+
+            }).AddXmlDataContractSerializerFormatters();
             services.AddControllersWithViews();
+
+            //services.AddScoped<RoleManager<IdentityRole>>();
+            //services.AddScoped<SignInManager<IdentityUser>>();
+            services.AddScoped<ITopListRepository, TopListRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,24 +58,12 @@ namespace Top_lista_vremena
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
+            app.UseMvc(routes =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

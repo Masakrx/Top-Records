@@ -1,14 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Top_lista_vremena.Models
 {
-    public class Login
+    public class Login : IdentityUser
     {
-        public string username { get; set; }
-        public string password { get; set; }
+        [Key]
+        public int ID { get; set; }
 
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [Required]
+        public int Role { get; set; }
     }
 }
