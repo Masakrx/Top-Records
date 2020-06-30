@@ -2,14 +2,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Top_lista_vremena.Models;
-using static Top_lista_vremena.Models.DbContext_Model;
 
 namespace Top_lista_vremena
 {
@@ -44,11 +42,11 @@ namespace Top_lista_vremena
                 option.EnableEndpointRouting = false;
 
             }).AddXmlDataContractSerializerFormatters();
-            services.AddControllersWithViews();
 
-            //services.AddScoped<RoleManager<IdentityRole>>();
-            //services.AddScoped<SignInManager<IdentityUser>>();
-            services.AddScoped<ITopListRepository, TopListRepository>();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.AddScoped<IRecordsRepository, RecordsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

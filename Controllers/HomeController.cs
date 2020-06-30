@@ -3,7 +3,6 @@ using System.Data;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Top_lista_vremena.Models;
 
 namespace Top_lista_vremena.Controllers
@@ -11,47 +10,60 @@ namespace Top_lista_vremena.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly ITopListRepository _topListRepository;
-        private readonly IConfiguration configuration;
-        private readonly string connectionString;
-        private static IList<TopTime> TopTimes;
-        private static IList<TopTime> UnapprovedTopTimes;
+        private readonly IRecordsRepository _topRecordsRepository;
+        private static IList<Record> TopRecordsList;
 
-        public HomeController(IConfiguration config, ITopListRepository topListRepository)
+        public HomeController(IRecordsRepository topListRepository)
         {
-            this.configuration = config;
-            connectionString = configuration.GetConnectionString("TopListConnection");
-            _topListRepository = topListRepository;
-            TopTimes = _topListRepository.GetTopList();
+            _topRecordsRepository = topListRepository;
+            TopRecordsList = _topRecordsRepository.GetRecords();
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
+        {
+            return View(TopRecordsList.Where(y => y.Approved == true).OrderBy(y => y.Time));
+        }
+
+        public PartialViewResult TopRecords()
+        {
+            return PartialView(TopRecordsList.Where(y => y.Approved == true).OrderBy(y => y.Time));
+        }
+
+        [HttpGet]
+        public ViewResult AddRecord()
         {
             return View();
         }
 
-        public IActionResult TopListView()
+        [HttpPost]
+        public IActionResult AddRecord(Record record)
         {
-            return PartialView("TopListView", TopTimes.OrderBy(x => x.Time));
-        }
-
-        public IActionResult NewRecord()
-        {
-            return View("NewRecordView");
-        }
-
-        public IActionResult AddRecord(TopTime record)
-        {
-            _topListRepository.AddTopListRecord(record);
-
-            return View("Index");
+            if (ModelState.IsValid)
+            {
+                TopRecordsList = _topRecordsRepository.AddRecord(record);
+                return View("Index");
+            }
+            foreach (var modelState in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                }
+            }
+            return View(record);
         }
 
         [Authorize]
-        public IActionResult UnapprovedRecordList()
+        public IActionResult UnapprovedRecords()
         {
-            UnapprovedTopTimes = _topListRepository.GetUnapprovedTopList();
-            return View("UnapprovedRecordListView",UnapprovedTopTimes);
+            return View(TopRecordsList.Where(y=>y.Approved==false));
+        }
+
+        public IActionResult UpdateRecord(int Id, bool isApproved, string viewName)
+        {
+            TopRecordsList = _topRecordsRepository.UpdateRecord(Id, isApproved);
+
+            return View(viewName, TopRecordsList.Where(y => y.Approved == false));
         }
 
     }

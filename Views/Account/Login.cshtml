@@ -1,16 +1,17 @@
 ﻿@model Top_lista_vremena.ViewModels.LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Prijava korisnika</h2>
-<hr />
+<div>&nbsp;<hr />&nbsp;</div>
+
 <div class="row">
     <div class="col-md-3">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+        <form method="post">           
             <div class="form-group">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <label asp-for="Username"></label>
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
@@ -26,10 +27,8 @@
                         <input asp-for="RemeberMe" />
                         @Html.DisplayNameFor(m => m.RemeberMe)
                     </label>
-
                 </div>
             </div>
-
             <button type="submit" class="btn btn-primary">Prijava</button>
         </form>
     </div>

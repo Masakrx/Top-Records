@@ -1,36 +1,45 @@
-﻿
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Top_lista_vremena.Models.Record>
+@inject SignInManager<IdentityUser> signInManager
 
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 <div class="text-center">
     <h2>Najbolja vremena</h2>
-    <div>&nbsp;</div>
-    <div id="topListTable">
-    </div>
-</div>
+    <div>&nbsp;<hr />&nbsp;</div>
 
-<script>
-    (function ($) {
-        $(function () {
-            GetTopList();
-        });
-    })(jQuery);
-</script>
-
-<script>
-    function GetTopList() {
-        $.ajax({
-            url: '@Url.Action("TopListView", "Home")',
-            type: "GET",
-            contentType: "application/json;charset=utf-8",
-            success: function (result) {
-                $('#topListTable').html(result);
-            },
-            error: function () {
-                alert("Nije moguće očitati top rezultate iz baze.");
-            }
-        });
+    @if (Model == null || Model.Count() == 0)
+    {
+        <i style="display:block;text-align:center;">Nema rezultata</i>
     }
-</script>
+    else
+    {
+        <table class="table table-light table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Vrijeme</th>
+                    @if (signInManager.IsSignedIn(User)) { <th class="text-center">Opcije</th> }                   
+                </tr>
+            </thead>
+            
+            @foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.Name</td>
+                    <td>@record.Surname</td>
+                    <td>@record.Time</td>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <td>
+                            @Html.ActionLink("Obriši", "UpdateRecord", new { Id = record.ID, isApproved = false, viewName = ViewBag.Title })
+                        </td>
+                    }                    
+                </tr>
+            }
+        </table>
+    }
+</div>

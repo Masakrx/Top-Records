@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Top_lista_vremena.Models.Record>
+@{
+    ViewBag.Title = "UnapprovedRecords";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h2>Popis novih vremena</h2>
+    <div>&nbsp;<hr />&nbsp;</div>
+
+    @if (Model == null || Model.Count() == 0)
+    {<i style="display: block;text-align: center;">Nema rezultata</i> }
+
+    else
+    {
+        <table class="table table-light table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Vrijeme</th>
+                    <th>Opcije</th>
+                </tr>
+            </thead>
+
+            @foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.Name</td>
+                    <td>@record.Surname</td>
+                    <td>@record.Time</td>
+                    <td>
+                        @Html.ActionLink("Prihvati", "UpdateRecord", new { Id = record.ID, isApproved = true, viewName = ViewBag.Title })
+                        @{WriteLiteral(" | ");}
+                        @Html.ActionLink("Odbij", "UpdateRecord", new { Id = record.ID, isApproved = false, viewName = ViewBag.Title })
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>

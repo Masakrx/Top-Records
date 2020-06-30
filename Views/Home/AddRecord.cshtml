@@ -1,0 +1,42 @@
+﻿@model Top_lista_vremena.Models.Record
+@{
+    ViewBag.Title = "AddRecord";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Novo vrijeme</h2>
+<div>&nbsp;<hr />&nbsp;</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <form method="post">
+            <div class="form-group">
+                <div asp-validation-summary="None" class="text-danger"></div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time"></label>
+                <input asp-for="Time" type="text" id="time" class="form-control"/>
+                <span asp-validation-for="Time" class="text-danger"></span>               
+            </div>
+            <button type="submit" class="btn btn-primary">Prijavi</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+   $(function () {
+        $('#time').datetimepicker({
+            format: "HH:mm:ss",
+            defaultDate: moment(new Date()).hours(0).minutes(0).seconds(0).milliseconds(0)
+        });
+    });
+</script>

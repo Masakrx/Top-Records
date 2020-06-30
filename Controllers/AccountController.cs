@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Top_lista_vremena.Models;
 using Top_lista_vremena.ViewModels;
 
 namespace Top_lista_vremena.Controllers
@@ -16,6 +15,13 @@ namespace Top_lista_vremena.Controllers
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -40,6 +46,12 @@ namespace Top_lista_vremena.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Login()
+        {
+            return View();
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -53,9 +65,9 @@ namespace Top_lista_vremena.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "Neispravna prijava");
+                ModelState.AddModelError(string.Empty, "Neispravno korisničko ime i/ili lozinka");
 
-            }
+            }           
             return View(model);
         }
 
@@ -67,18 +79,5 @@ namespace Top_lista_vremena.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register()
-        {
-            return View();
-        }
     }
 }
