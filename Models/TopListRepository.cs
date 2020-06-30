@@ -10,11 +10,13 @@ namespace Top_lista_vremena.Models
     public class TopListRepository : ITopListRepository
     {
         private static List<TopTime> _topTimeList;
+        private static List<TopTime> _unapprovedTopTimeList;
         private readonly IConfiguration configuration;
         public readonly string connectionString;
         public TopListRepository(IConfiguration config)
         {
             _topTimeList = new List<TopTime>();
+            _unapprovedTopTimeList = new List<TopTime>();
             this.configuration = config;
             connectionString = configuration.GetConnectionString("TopListConnection");
 
@@ -80,6 +82,36 @@ namespace Top_lista_vremena.Models
                 }
             }
             return _topTimeList;
+        }
+
+        public List<TopTime> GetUnapprovedTopList()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("spGetUnapprovedTopListRecords", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        TopTime record = new TopTime();
+                        record.ID = (int)dr[0];
+                        record.Name = dr[1].ToString();
+                        record.Surname = dr[2].ToString();
+                        record.Time = TimeSpan.Parse(dr[3].ToString());
+
+                        _unapprovedTopTimeList.Add(record);
+                    }
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            return _unapprovedTopTimeList;
         }
     }
 }

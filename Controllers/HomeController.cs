@@ -15,6 +15,7 @@ namespace Top_lista_vremena.Controllers
         private readonly IConfiguration configuration;
         private readonly string connectionString;
         private static IList<TopTime> TopTimes;
+        private static IList<TopTime> UnapprovedTopTimes;
 
         public HomeController(IConfiguration config, ITopListRepository topListRepository)
         {
@@ -47,9 +48,10 @@ namespace Top_lista_vremena.Controllers
         }
 
         [Authorize]
-        public IActionResult NewRecordsList()
+        public IActionResult UnapprovedRecordList()
         {
-            return View("newRecordsListView");
+            UnapprovedTopTimes = _topListRepository.GetUnapprovedTopList();
+            return View("UnapprovedRecordListView",UnapprovedTopTimes);
         }
 
     }

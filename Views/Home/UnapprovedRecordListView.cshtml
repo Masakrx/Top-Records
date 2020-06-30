@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Top_lista_vremena.Models.TopTime>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .table {
+        white-space: nowrap;
+        position: center;
+        vertical-align: central;
+        margin: 0px;
+    }
+</style>
+
+<div class="text-center">
+    <h2>Popis novih vremena</h2>
+    <hr />
+    <div>&nbsp;</div>
+</div>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <i style="display:block;text-align:center;">Nema rezultata</i>
+}
+else
+{
+    <table class="table table-bordered table-condensed table-striped text-center">
+        <tr>
+            <th class="text-center">
+                Ime
+            </th>
+
+            <th class="text-center">
+                Prezime
+            </th>
+
+            <th class="text-center">
+                Vrijeme
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Surname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+            </tr>
+        }
+    </table>
+}

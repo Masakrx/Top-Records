@@ -10,5 +10,6 @@ namespace Top_lista_vremena.Models
     {
         List<TopTime> GetTopList();
         bool AddTopListRecord(TopTime record);
+        List<TopTime> GetUnapprovedTopList();
     }
 }
