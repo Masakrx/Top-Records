@@ -24,6 +24,18 @@ namespace Top_lista_vremena.Controllers
             return View();
         }
 
+        [AcceptVerbs("GET","POST")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsUsernameInUse(string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+            if (user != null)
+                return Json($"Korisničko ime {username} već postoji.");
+            else
+                return Json(true);
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -55,7 +67,7 @@ namespace Top_lista_vremena.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +75,9 @@ namespace Top_lista_vremena.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                        return Redirect(returnUrl);
+
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError(string.Empty, "Neispravno korisničko ime i/ili lozinka");

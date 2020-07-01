@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Text;
+using System.Net.Mail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Top_lista_vremena.Models;
@@ -12,6 +15,10 @@ namespace Top_lista_vremena.Controllers
     {
         private readonly IRecordsRepository _topRecordsRepository;
         private static IList<Record> TopRecordsList;
+
+        NetworkCredential login = new NetworkCredential("TopRecordsApp@outlook.com", "toprecords123");
+        SmtpClient client = new SmtpClient("smtp.office365.com", 587);
+        MailMessage message;
 
         public HomeController(IRecordsRepository topListRepository)
         {
@@ -41,6 +48,7 @@ namespace Top_lista_vremena.Controllers
             if (ModelState.IsValid)
             {
                 TopRecordsList = _topRecordsRepository.AddRecord(record);
+                EmailData email = new EmailData(record);
                 return View("Index");
             }
             foreach (var modelState in ViewData.ModelState.Values)
@@ -66,5 +74,26 @@ namespace Top_lista_vremena.Controllers
             return View(viewName, TopRecordsList.Where(y => y.Approved == false));
         }
 
+        public IActionResult SendEmail(Record record)
+        {
+            try
+            {
+                client.EnableSsl = true;
+                client.Credentials = login;
+                message = new MailMessage(from: "TopRecordsApp@outlook.com", to: record.Email);
+                message.Subject = "Test subject";
+                message.Body = "Ovo je testna poruka";
+                message.BodyEncoding = Encoding.UTF8;
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.Normal;
+                client.SendAsync(message, "Šaljem...");
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+
+            return Json(true);
+        }
     }
 }

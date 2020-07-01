@@ -35,9 +35,10 @@ namespace Top_lista_vremena.Models
                         Record record = new Record();
                         record.ID = (int)dr[0];
                         record.Name = dr[1].ToString();
-                        record.Surname = dr[2].ToString();
+                        record.Surname = dr[2].ToString();                      
                         record.Time = TimeSpan.Parse(dr[3].ToString());
-                        record.Approved = (bool)dr[4];
+                        record.Email = dr[4].ToString();
+                        record.Approved = (bool)dr[5];
 
                         _topRecords.Add(record);
                     }
@@ -68,6 +69,7 @@ namespace Top_lista_vremena.Models
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@name", SqlDbType.VarChar).Value = record.Name;
                     cmd.Parameters.Add("@surname", SqlDbType.VarChar).Value = record.Surname;
+                    cmd.Parameters.Add("@email", SqlDbType.VarChar).Value = record.Email;
                     cmd.Parameters.Add("@time", SqlDbType.Time).Value = record.Time;
                     cmd.ExecuteReader();
                 }
