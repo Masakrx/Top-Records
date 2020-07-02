@@ -12,6 +12,7 @@ namespace Top_lista_vremena.Models
         private static List<Record> _topRecords;
         private readonly IConfiguration configuration;
         private readonly string connectionString;
+        public EmailData Email;
         public RecordsRepository(IConfiguration config)
         {
             _topRecords = new List<Record>();
@@ -87,7 +88,7 @@ namespace Top_lista_vremena.Models
         }
 
 
-        public List<Record> UpdateRecord(int Id, bool isApproved)
+        public List<Record> UpdateRecord(int Id, bool isApproved,string view)
         {
             Record updatedRecord = _topRecords.FirstOrDefault(x => x.ID == Id);
             updatedRecord.Approved = isApproved;
@@ -102,6 +103,7 @@ namespace Top_lista_vremena.Models
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = updatedRecord.ID;
                     cmd.Parameters.Add("@isApproved", SqlDbType.Bit).Value = updatedRecord.Approved;
                     cmd.ExecuteReader();
+                    Email = new EmailData(updatedRecord, view);
                 }
                 catch (Exception e)
                 {

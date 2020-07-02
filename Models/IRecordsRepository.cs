@@ -6,6 +6,6 @@ namespace Top_lista_vremena.Models
     {
         List<Record> GetRecords();
         List<Record> AddRecord(Record record);
-        List<Record> UpdateRecord(int Id, bool isApproved);
+        List<Record> UpdateRecord(int Id, bool isApproved, string view);
     }
 }
