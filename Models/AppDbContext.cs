@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Top_lista_vremena.Models
+namespace Top_Records.Models
 {
     public class AppDbContext : IdentityDbContext
     {

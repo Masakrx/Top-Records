@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Top_lista_vremena.Utilities
+namespace Top_Records.Utilities
 {
     public class ValidEmailDomainAtrribute :ValidationAttribute
     {

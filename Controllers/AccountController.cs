@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Top_lista_vremena.ViewModels;
+using Top_Records.ViewModels;
 
-namespace Top_lista_vremena.Controllers
+namespace Top_Records.Controllers
 {  
     public class AccountController : Controller
     {

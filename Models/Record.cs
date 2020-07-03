@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Top_lista_vremena.Utilities;
+using Top_Records.Utilities;
 
-namespace Top_lista_vremena.Models
+namespace Top_Records.Models
 {
     public class Record
     {

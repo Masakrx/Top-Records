@@ -2,7 +2,7 @@
 using System.Net.Mail;
 using System.Text;
 
-namespace Top_lista_vremena.Models
+namespace Top_Records.Models
 {
     public class EmailData
     {
@@ -14,11 +14,11 @@ namespace Top_lista_vremena.Models
         {
             try
             {
-                Login = new NetworkCredential("TopRecordsApp@yahoo.com", "toprecords123");
-                //Login = new NetworkCredential("TopRecordsApp@outlook.com", "toprecords123");
+                //Login = new NetworkCredential("TopRecordsApp@yahoo.com", "toprecords123");
+                Login = new NetworkCredential("TopRecordsApp@outlook.com", "toprecords123");
 
-                Client = new SmtpClient("smtp.mail.yahoo.com", 587);
-                //Client = new SmtpClient("smtp.office365.com", 587);
+                //Client = new SmtpClient("smtp.mail.yahoo.com", 587);
+                Client = new SmtpClient("smtp.office365.com", 587);
                 Client.UseDefaultCredentials = false;
                 Client.Credentials = Login;
                 Client.EnableSsl = true;

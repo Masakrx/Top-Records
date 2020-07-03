@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace Top_lista_vremena.Models
+namespace Top_Records.Models
 {
     public class RecordsRepository : IRecordsRepository
     {

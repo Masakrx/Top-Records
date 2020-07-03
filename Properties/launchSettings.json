@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Top_lista_vremena": {
+    "Top_Records": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

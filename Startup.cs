@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Top_lista_vremena.Models;
+using Top_Records.Models;
 
-namespace Top_lista_vremena
+namespace Top_Records
 {
     public class Startup
     {

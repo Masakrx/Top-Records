@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Top_lista_vremena</RootNamespace>
+    <RootNamespace>Top Records</RootNamespace>
     <ApplicationIcon>wwwroot\pictures\favicon.ico</ApplicationIcon>
   </PropertyGroup>
 

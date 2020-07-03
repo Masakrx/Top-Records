@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Top_lista_vremena.Models;
+using Top_Records.Models;
 
-namespace Top_lista_vremena.Controllers
+namespace Top_Records.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller

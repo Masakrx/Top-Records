@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Top_lista_vremena.ViewModels
+namespace Top_Records.ViewModels
 {
     public class RegisterViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Top_lista_vremena.Models
+namespace Top_Records.Models
 {
     public interface IRecordsRepository
     {
