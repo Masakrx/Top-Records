@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Top_Records.Models.Record>
 @inject SignInManager<IdentityUser> signInManager
 
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,26 +10,30 @@
 <div class="text-center">
     <h2>Najbolja vremena</h2>
     <div>&nbsp;<hr />&nbsp;</div>
-
+        
     @if (Model == null || Model.Count() == 0)
     {
         <i style="display:block;text-align:center;">Nema rezultata</i>
     }
     else
     {
+        int position = 1; 
         <table class="table table-light table-striped text-center">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Ime</th>
                     <th>Prezime</th>
                     <th>Vrijeme</th>
-                    @if (signInManager.IsSignedIn(User)) { <th class="text-center">Opcije</th> }                   
+                    @if (signInManager.IsSignedIn(User))
+                    { <th class="text-center">Opcije</th> }                   
                 </tr>
             </thead>
             
             @foreach (var record in Model)
             {
                 <tr>
+                    <td>@(position++).</td>
                     <td>@record.Name</td>
                     <td>@record.Surname</td>
                     <td>@record.Time</td>
@@ -39,7 +44,8 @@
                         </td>
                     }                    
                 </tr>
-            }
+            }                
         </table>
-    }
+        }
+        
 </div>

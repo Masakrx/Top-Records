@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Top Records</RootNamespace>
-    <ApplicationIcon>wwwroot\pictures\favicon.ico</ApplicationIcon>
+    <ApplicationIcon>wwwroot\pictures\crown.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
