@@ -35,7 +35,7 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <td>
-                            @Html.ActionLink("Obriši", "UpdateRecord", new { Id = record.ID, isApproved = false, viewName = ViewBag.Title })
+                            <a asp-action="UpdateRecord" asp-controller="Home" asp-route-Id="@record.ID" asp-route-isApproved="false" asp-route-viewName="@ViewBag.Title">Obriši</a>                       
                         </td>
                     }                    
                 </tr>

@@ -30,9 +30,10 @@
                     <td>@record.Surname</td>
                     <td>@record.Time</td>
                     <td>
-                        @Html.ActionLink("Prihvati", "UpdateRecord", new { Id = record.ID, isApproved = true, viewName = ViewBag.Title })
+                        <a asp-action="UpdateRecord" asp-controller="Home" asp-route-Id="@record.ID" asp-route-isApproved="true" asp-route-viewName="@ViewBag.Title">Prihvati</a>                       
                         @{WriteLiteral(" | ");}
-                        @Html.ActionLink("Odbij", "UpdateRecord", new { Id = record.ID, isApproved = false, viewName = ViewBag.Title })
+                        <a asp-action="UpdateRecord" asp-controller="Home" asp-route-Id="@record.ID" asp-route-isApproved="false" asp-route-viewName="@ViewBag.Title">Odbij</a>
+                        
                     </td>
                 </tr>
             }

@@ -3,20 +3,36 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "bootstrap-timepicker@0.5.2",
-      "destination": "wwwroot/lib/bootstrap-timepicker/"
+      "library": "moment.js@2.27.0",
+      "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "bootstrap-datetimepicker@4.17.47",
+      "destination": "wwwroot/lib/bootstrap-datetimepicker/bootstrap-datetimepicker/"
+    },
+    {
+      "library": "jquery-ui-timepicker-addon@1.6.3",
+      "destination": "wwwroot/lib/jquery-ui-timepicker-addon/"
+    },
+    {
+      "library": "jquery-ui-map@3.0-rc1",
+      "destination": "wwwroot/lib/jquery-ui-map/"
+    },
+    {
+      "library": "jqueryui@1.12.1",
+      "destination": "wwwroot/lib/jqueryui/"
     },
     {
       "library": "timepicker@1.3.5",
       "destination": "wwwroot/lib/timepicker/"
     },
     {
-      "library": "bootstrap-datetimepicker@4.17.47",
-      "destination": "wwwroot/lib/bootstrap-datetimepicker/"
+      "library": "bootstrap-timepicker@0.5.2",
+      "destination": "wwwroot/lib/bootstrap-timepicker/"
     },
     {
-      "library": "moment.js@2.27.0",
-      "destination": "wwwroot/lib/moment.js/"
+      "library": "mdbootstrap@4.19.1",
+      "destination": "wwwroot/lib/mdbootstrap/"
     }
   ]
 }

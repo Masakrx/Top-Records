@@ -4,44 +4,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Novo vrijeme</h2>
-<div>&nbsp;<hr />&nbsp;</div>
-
-<div class="row">
-    <div class="col-md-3">
-        <form method="post">
-            <div class="form-group">
-                <div asp-validation-summary="None" class="text-danger"></div>
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Surname"></label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Time"></label>
-                <input asp-for="Time" type="text" id="time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger"></span>
-            </div>
-            <button id="submit" type="submit" class="btn btn-primary">Prijavi</button>
-        </form>        
+<div id="addDiv">
+    <h2>Novo vrijeme</h2>
+    <div>&nbsp;<hr /></div>
+    <div class="row">
+        <div class="col-md-3">
+            <form method="post">
+                <div class="form-group">
+                    <div asp-validation-summary="None" class="text-danger"></div>
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname"></label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group md-form md-outline">
+                    <label asp-for="Time"></label>
+                    <input asp-for="Time" type="time" id="timePicker" class="form-control" value="00:00:00" step="1" />
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <button id="submit" type="submit" class="btn btn-primary">Prijavi</button>
+            </form>
+        </div>
     </div>
 </div>
-
+<div class="text-center" id="popup" style="position:center" hidden>
+    <h4>Vrijeme je uspješno prijavljeno. </h4>
+    <p>Administrator će Vam odobriti ili odbiti zapis i bit će te obaviješteni mailom.</p>
+    <p>Bit će te preusmjereni na glavni izbornik za 5 sekundi...</p>
+</div>
 
 <script>
-   $(function () {
-        $('#time').datetimepicker({
-            format: "HH:mm:ss",
-            defaultDate: moment(new Date()).hours(0).minutes(0).seconds(0).milliseconds(0)
+    $(function () {
+        $('#submit').on("click", function () {
+            $('#addDiv').attr("hidden",true);
+            $('#popup').removeAttr("hidden");
+            $('#popup').focus();
         });
     });
 </script>

@@ -7,6 +7,37 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\bootstrap-datetimepicker\**" />
+    <Compile Remove="wwwroot\lib\bootstrap-timepicker\**" />
+    <Compile Remove="wwwroot\lib\jquery-ui-map\**" />
+    <Compile Remove="wwwroot\lib\jquery-ui-timepicker-addon\**" />
+    <Compile Remove="wwwroot\lib\jqueryui\**" />
+    <Compile Remove="wwwroot\lib\mdbootstrap\**" />
+    <Compile Remove="wwwroot\lib\timepicker\**" />
+    <Content Remove="wwwroot\lib\bootstrap-datetimepicker\**" />
+    <Content Remove="wwwroot\lib\bootstrap-timepicker\**" />
+    <Content Remove="wwwroot\lib\jquery-ui-map\**" />
+    <Content Remove="wwwroot\lib\jquery-ui-timepicker-addon\**" />
+    <Content Remove="wwwroot\lib\jqueryui\**" />
+    <Content Remove="wwwroot\lib\mdbootstrap\**" />
+    <Content Remove="wwwroot\lib\timepicker\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap-datetimepicker\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap-timepicker\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-ui-map\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery-ui-timepicker-addon\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jqueryui\**" />
+    <EmbeddedResource Remove="wwwroot\lib\mdbootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\lib\timepicker\**" />
+    <None Remove="wwwroot\lib\bootstrap-datetimepicker\**" />
+    <None Remove="wwwroot\lib\bootstrap-timepicker\**" />
+    <None Remove="wwwroot\lib\jquery-ui-map\**" />
+    <None Remove="wwwroot\lib\jquery-ui-timepicker-addon\**" />
+    <None Remove="wwwroot\lib\jqueryui\**" />
+    <None Remove="wwwroot\lib\mdbootstrap\**" />
+    <None Remove="wwwroot\lib\timepicker\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />

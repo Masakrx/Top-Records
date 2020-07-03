@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Top_lista_vremena.Models;
@@ -41,6 +42,7 @@ namespace Top_lista_vremena.Controllers
             if (ModelState.IsValid)
             {
                 TopRecordsList = _topRecordsRepository.AddRecord(record);
+                Thread.Sleep(5000);
                 return View("Index");
             }
             foreach (var modelState in ViewData.ModelState.Values)
@@ -56,15 +58,15 @@ namespace Top_lista_vremena.Controllers
         [Authorize]
         public IActionResult UnapprovedRecords()
         {
-            return View(TopRecordsList.Where(y=>y.Approved==false));
+            return View(TopRecordsList.Where(y=>y.Approved==false).OrderBy(y=>y.Time));
         }
 
-
+        [HttpGet]
         public IActionResult UpdateRecord(int Id, bool isApproved, string viewName)
         {
             TopRecordsList = _topRecordsRepository.UpdateRecord(Id, isApproved, viewName);
 
-            return View(viewName, TopRecordsList.Where(y => y.Approved == false));
+            return RedirectToAction(viewName,"Home");
         }
     }
 }
