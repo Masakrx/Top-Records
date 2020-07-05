@@ -3,8 +3,8 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Top_Records.Models;
 
 namespace Top_Records.Controllers
@@ -22,7 +22,7 @@ namespace Top_Records.Controllers
 
         [AllowAnonymous]
         public ViewResult Index()
-        {
+        { 
             return View(TopRecordsList.Where(y => y.Approved == true).OrderBy(y => y.Time));
         }
 
@@ -69,9 +69,29 @@ namespace Top_Records.Controllers
         [Authorize]
         public IActionResult UpdateRecord(int Id, bool isApproved, string viewName)
         {
-            TopRecordsList = _topRecordsRepository.UpdateRecord(Id, isApproved, viewName);
+            Record updatedRecord = TopRecordsList.FirstOrDefault(x => x.ID == Id);
+            updatedRecord.Approved = isApproved;
+
+            if (!isApproved)
+            {
+                var confirmURL = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/{this.ControllerContext.RouteData.Values["controller"]}/Validation?IsApproved=false&recordID=" + Id;
+                _topRecordsRepository.ConfirmationURL(confirmURL, updatedRecord, viewName);
+                
+            }
+            else
+            {
+                TopRecordsList = _topRecordsRepository.UpdateRecord(updatedRecord);
+            }
 
             return RedirectToAction(viewName,"Home");
+        }
+
+        public IActionResult Validation(bool isApproved, int recordID)
+        {
+            Record updatedRecord = TopRecordsList.FirstOrDefault(x => x.ID == recordID);
+            updatedRecord.Approved = isApproved;
+            TopRecordsList = _topRecordsRepository.UpdateRecord(updatedRecord);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

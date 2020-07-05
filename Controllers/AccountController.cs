@@ -14,10 +14,11 @@ namespace Top_Records.Controllers
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
+            this.signInManager = signInManager;   
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Register()
         {
             return View();
@@ -35,6 +36,7 @@ namespace Top_Records.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -44,7 +46,6 @@ namespace Top_Records.Controllers
 
                 if (result.Succeeded)
                 {
-                    //await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)

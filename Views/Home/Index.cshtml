@@ -40,7 +40,7 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <td>
-                            <a asp-action="UpdateRecord" asp-controller="Home" asp-route-Id="@record.ID" asp-route-isApproved="false" asp-route-viewName="@ViewBag.Title">Obriši</a>                       
+                            <a id="denied" name="@record.Email" asp-action="UpdateRecord" asp-controller="Home" asp-route-Id="@record.ID" asp-route-isApproved="false" asp-route-viewName="@ViewBag.Title">Obriši</a>                       
                         </td>
                     }                    
                 </tr>
@@ -48,4 +48,10 @@
         </table>
         }       
 </div>
+
+<script>
+    $('#denied').on("click", function () {
+        alert("Poslan je email za potvrdu na adresu: " + $('#denied').attr("name"));
+    });
+</script>
 

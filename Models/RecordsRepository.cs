@@ -89,13 +89,9 @@ namespace Top_Records.Models
             }
             return _topRecords;
         }
-
-
-        public List<Record> UpdateRecord(int Id, bool isApproved,string view)
+     
+        public List<Record> UpdateRecord(Record updatedRecord)
         {
-            Record updatedRecord = _topRecords.FirstOrDefault(x => x.ID == Id);
-            updatedRecord.Approved = isApproved;
-
             using (var connection = new SqlConnection(connectionString))
             {
                 try
@@ -117,11 +113,15 @@ namespace Top_Records.Models
                 }
             }
 
-            if (!isApproved)
-                Email = new EmailData(updatedRecord, view);
+            if (!updatedRecord.Approved)
                 _topRecords.Remove(updatedRecord);
                 
             return _topRecords;
+        }
+
+        public void ConfirmationURL(string confirmURL,Record record, string viewName)
+        {
+            Email = new EmailData(record, viewName, confirmURL);
         }
     }
 }

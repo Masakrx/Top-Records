@@ -28,13 +28,9 @@ namespace Top_Records
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppDbContext>();
+
             services.AddMvc(option =>
             {
-                /*var policy = new AuthorizationPolicyBuilder()
-                                .RequireAuthenticatedUser()
-                                .Build();
-
-                option.Filters.Add(new AuthorizeFilter(policy));*/
                 option.EnableEndpointRouting = false;
 
             }).AddXmlDataContractSerializerFormatters();
@@ -42,8 +38,6 @@ namespace Top_Records
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped<IRecordsRepository, RecordsRepository>();
-
-            //services.AddScoped<EmailSecrets>();
 
         }
 
