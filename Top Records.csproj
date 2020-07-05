@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Top Records</RootNamespace>
     <ApplicationIcon>wwwroot\pictures\crown.ico</ApplicationIcon>
+    <UserSecretsId>de34a36e-f505-4824-9a6a-4be2f091723d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -17,7 +17,6 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/moment.js/moment.js"></script>
 
-
 </head>
 <body>
     <header>
@@ -31,9 +30,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         @if (signInManager.IsSignedIn(User))
-                        {                            
+                        {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UnapprovedRecords">Nova vremena</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UnapprovedRecords">Nepotvrđena vremena</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link d-inline-block" asp-area="" asp-controller="Account" asp-action="Register">Novi račun</a>
                             </li>
                         }
                         else
@@ -47,10 +49,7 @@
                 <div class="pull-right" style="display:inline-block">
                     <ul class="navbar-nav flex-grow-1">
                         @if (signInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link d-inline-block" asp-area="" asp-controller="Account" asp-action="Register">Registracija</a>
-                            </li>
+                        {                          
                             <li class="nav-item">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
                                     <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">

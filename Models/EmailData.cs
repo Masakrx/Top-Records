@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.Configuration;
+using System.Net;
 using System.Net.Mail;
 using System.Text;
 
@@ -6,9 +7,21 @@ namespace Top_Records.Models
 {
     public class EmailData
     {
-        public static NetworkCredential Login { get; set; }
-        public static SmtpClient Client { get; set; }
-        public static MailMessage Message { get; set; }
+        private static string Username { get; set; }
+        private static string Password { get; set; }
+        private static int Port { get; set; }
+        private static bool Ssl { get; set; }
+        private static string Host { get; set; }
+
+        public EmailData(IConfiguration _config)
+        {
+            Username = _config.GetSection("EmailData:Username").Value;
+            Password = _config.GetSection("EmailData:Password").Value;
+            Host = _config.GetSection("EmailData:Host").Value;
+            Port = System.Convert.ToInt32(_config.GetSection("EmailData:Port").Value.ToString());
+            Ssl = System.Convert.ToBoolean(_config.GetSection("EmailData:Ssl").Value);
+            
+        }
 
         public EmailData(Record record, string view)
         {
@@ -16,24 +29,15 @@ namespace Top_Records.Models
             {
                 try
                 {
-                    //Login = new NetworkCredential("TopRecordsApp@yahoo.com", "toprecords123");
-                    //Client = new SmtpClient("smtp.mail.yahoo.com", 587);
-                    /*if (record.Approved)
-                    {
-                        Message.Body = "Pozdrav " + record.Name + " " + record.Surname + ", <br /><br />" +
-                        " ovim putem Vas obavještavamo da je Vaše prijavljeno vrijeme: '" + record.Time + "' odobreno i uneseno na top listu. <br /><br />" +
-                        "Lijep pozdrav, <br /> " +
-                        "TopRecordsApp";
-                    }*/
-                    Login = new NetworkCredential("TopRecordsApp@outlook.com", "toprecords123");
+                    var Login = new NetworkCredential(Username, Password);
 
-                    Client = new SmtpClient("smtp.office365.com", 587);
+                    var Client = new SmtpClient(Host, Port);
                     Client.UseDefaultCredentials = false;
                     Client.Credentials = Login;
-                    Client.EnableSsl = true;
+                    Client.EnableSsl = Ssl;
                     Client.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                    Message = new MailMessage(from: Login.UserName, to: record.Email);
+                    var Message = new MailMessage(from: Login.UserName, to: record.Email);
                     Message.Subject = "Top Records vrijeme";
 
                     if (view == "UnapprovedRecords")
@@ -41,14 +45,14 @@ namespace Top_Records.Models
                         Message.Body = "Pozdrav " + record.Name + " " + record.Surname + ", <br /><br />" +
                          " ovim putem Vas obavještavamo da je Vaše prijavljeno vrijeme: '" + record.Time + "' odbijeno sa strane administratora. <br /><br />" +
                          "Lijep pozdrav, <br /> " +
-                         "TopRecordsApp";
+                         "TopRecords";
                     }
                     else if (view == "Index")
                     {
                         Message.Body = "Pozdrav " + record.Name + " " + record.Surname + ", <br /><br />" +
                          " ovim putem Vas obavještavamo da je Vaše prijavljeno vrijeme: '" + record.Time + "' obrisano sa Top Records liste. <br /><br />" +
                          "Lijep pozdrav, <br /> " +
-                         "TopRecordsApp";
+                         "TopRecords";
                     }
                     Message.BodyEncoding = Encoding.UTF8;
                     Message.IsBodyHtml = true;

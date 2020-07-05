@@ -18,14 +18,12 @@ namespace Top_Records.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [AcceptVerbs("GET","POST")]
-        [AllowAnonymous]
         public async Task<IActionResult> IsUsernameInUse(string username)
         {
             var user = await userManager.FindByNameAsync(username);
@@ -37,7 +35,6 @@ namespace Top_Records.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)

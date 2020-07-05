@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,12 +13,14 @@ namespace Top_Records.Models
         private static List<Record> _topRecords;
         private readonly IConfiguration configuration;
         private readonly string connectionString;
-        public EmailData Email;
+        private EmailData Email;
         public RecordsRepository(IConfiguration config)
         {
             _topRecords = new List<Record>();
             this.configuration = config;
-            connectionString = configuration.GetConnectionString("TopListConnection");
+            connectionString = configuration.GetConnectionString("TopRecordsConnection");
+            Email = new EmailData(config);
+            
         }
         
         public List<Record> GetRecords()
@@ -102,8 +105,7 @@ namespace Top_Records.Models
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@Id", SqlDbType.Int).Value = updatedRecord.ID;
                     cmd.Parameters.Add("@isApproved", SqlDbType.Bit).Value = updatedRecord.Approved;
-                    cmd.ExecuteReader();
-                    Email = new EmailData(updatedRecord, view);
+                    cmd.ExecuteReader();   
                 }
                 catch (Exception e)
                 {
@@ -116,6 +118,7 @@ namespace Top_Records.Models
             }
 
             if (!isApproved)
+                Email = new EmailData(updatedRecord, view);
                 _topRecords.Remove(updatedRecord);
                 
             return _topRecords;
