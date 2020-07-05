@@ -226,6 +226,7 @@ namespace TopRecords.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
+
             migrationBuilder.Sql("INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) " +
                " VALUES (N'ff6f380a-9e81-4cd1-929c-1a0ce20ddd4e', N'admin', N'ADMIN', NULL, NULL, 0, N'AQAAAAEAACcQAAAAEMCJPtEjR9huZNZnoD/c0+gGtcVkftum1oLUJlkNJmLSNpo3gFZckZL3tOSFzW7jiw==', N'UQRWLNA5YBDTYRR23URPHYXSAKLPMUKO', N'b03deb79-cb3f-4615-81bd-570d12e6a8c0', NULL, 0, 0, NULL, 1, 0)"); 
         }
