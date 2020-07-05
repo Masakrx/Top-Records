@@ -33,7 +33,7 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UnapprovedRecords">Nepotvrđena vremena</a>
-                            </li>
+                            </li>  
                             <li class="nav-item">
                                 <a class="nav-link d-inline-block" asp-area="" asp-controller="Account" asp-action="Register">Novi račun</a>
                             </li>
@@ -49,7 +49,7 @@
                 <div class="pull-right" style="display:inline-block">
                     <ul class="navbar-nav flex-grow-1">
                         @if (signInManager.IsSignedIn(User))
-                        {                          
+                        {
                             <li class="nav-item">
                                 <form method="post" asp-action="Logout" asp-controller="Account">
                                     <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">
@@ -59,7 +59,10 @@
                             </li>
                         }
                         else
-                        {              
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link d-inline-block" asp-area="" asp-controller="Account" asp-action="Register">Novi račun</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link d-inline-block" asp-area="" asp-controller="Account" asp-action="Login">Prijava</a>
                             </li>

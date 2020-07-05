@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using Top_Records.Utilities;
+
 
 namespace Top_Records.Models
 {
@@ -18,7 +18,6 @@ namespace Top_Records.Models
 
         [Required(ErrorMessage ="Email je obavezno polje"), DataType(DataType.EmailAddress)]
         [EmailAddress]
-        //[ValidEmailDomainAtrribute(allowedDomain: "google.com",ErrorMessage ="Email nije u traženoj domeni")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Vrijeme je obavezno polje"), DataType(DataType.Time)]

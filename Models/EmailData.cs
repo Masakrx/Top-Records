@@ -19,8 +19,7 @@ namespace Top_Records.Models
             Password = _config.GetSection("EmailData:Password").Value;
             Host = _config.GetSection("EmailData:Host").Value;
             Port = System.Convert.ToInt32(_config.GetSection("EmailData:Port").Value.ToString());
-            Ssl = System.Convert.ToBoolean(_config.GetSection("EmailData:Ssl").Value);
-            
+            Ssl = System.Convert.ToBoolean(_config.GetSection("EmailData:Ssl").Value);            
         }
 
         public EmailData(Record record, string view)

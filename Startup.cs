@@ -14,7 +14,7 @@ namespace Top_Records
         private IConfiguration _config;
         public Startup(IConfiguration configuration)
         {
-            _config = configuration;          
+            _config = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -28,7 +28,7 @@ namespace Top_Records
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppDbContext>();
-            services.AddMvc(option => 
+            services.AddMvc(option =>
             {
                 /*var policy = new AuthorizationPolicyBuilder()
                                 .RequireAuthenticatedUser()
@@ -41,7 +41,7 @@ namespace Top_Records
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddScoped<IRecordsRepository, RecordsRepository>();          
+            services.AddScoped<IRecordsRepository, RecordsRepository>();
 
             //services.AddScoped<EmailSecrets>();
 
